@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ayet: Namaz Vakti, Ezan, Kur'an</title>
+<meta name="description" content="Namaz vakti, ezan, sana özel günün ayeti, reklamsız Kur'an okuma. Abonelik yok.">
+<meta property="og:title" content="Ayet: Namaz Vakti, Ezan, Kur'an">
+<meta property="og:description" content="Her gün bir ayet · Namaz vakitleri · Ezan · Kıble · Dualar">
+<meta property="og:image" content="https://pyrenox.github.io/ayet/icon.png">
+<meta property="og:url" content="https://pyrenox.github.io/ayet/">
+<link rel="icon" href="icon.png">
+<script>
+  // Paylaşılan kartlardaki tek bağlantı: Android -> Google Play, iPhone -> App Store.
+  // iPhone sürümü yayına çıkınca IOS_LIVE = true yapılır; o zamana kadar iPhone'da "çok yakında" gösterilir.
+  var IOS_LIVE = false;
+  var PLAY = 'https://play.google.com/store/apps/details?id=com.alitutal.ayetapp';
+  var APPSTORE = 'https://apps.apple.com/app/id6833613165';
+  var ua = navigator.userAgent || '';
+  var isAndroid = /android/i.test(ua);
+  var isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isAndroid) location.replace(PLAY);
+  else if (isIOS && IOS_LIVE) location.replace(APPSTORE);
+</script>
+<style>
+  :root { --bg: #0e1c2e; --card: #15283f; --text: #eef6f8; --muted: #a9bdc9; --accent: #26c6da; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, "Noto Sans", Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+  main { width: 100%; max-width: 420px; text-align: center; }
+  img.logo { width: 120px; height: 120px; border-radius: 28px; box-shadow: 0 8px 30px rgba(38,198,218,.25); }
+  h1 { font-size: 28px; margin: 18px 0 6px; }
+  p.tag { color: var(--muted); font-size: 16px; line-height: 1.5; margin: 0 0 24px; }
+  a.btn { display: block; padding: 15px 18px; margin: 12px 0; border-radius: 14px; text-decoration: none;
+    font-weight: 700; font-size: 17px; background: var(--accent); color: #062a30; }
+  a.btn.alt { background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.12); }
+  .soon { background: var(--card); border-radius: 14px; padding: 14px; color: var(--muted); margin: 12px 0; font-size: 15px; }
+  ul { list-style: none; padding: 0; margin: 22px 0 0; color: var(--muted); font-size: 14.5px; line-height: 1.9; }
+  [dir="rtl"] { direction: rtl; }
+</style>
+</head>
+<body>
+<main id="app">
+  <img class="logo" src="icon.png" alt="Ayet">
+  <h1 id="title">Ayet</h1>
+  <p class="tag" id="tag"></p>
+  <div id="buttons">
+    <a class="btn" id="play" href="https://play.google.com/store/apps/details?id=com.alitutal.ayetapp">Google Play</a>
+    <a class="btn alt" id="ios" href="https://apps.apple.com/app/id6833613165">App Store</a>
+  </div>
+  <div class="soon" id="soon" hidden></div>
+  <ul id="features"></ul>
+</main>
+<script>
+  var T = {
+    tr: { tag: "Her gün sana özel bir ayet, namaz vakitleri ve ezan, reklamsız Kur'an okuma. Abonelik yok.",
+      play: "Google Play'den indir", ios: "App Store'dan indir", soon: "iPhone sürümü çok yakında App Store'da.",
+      f: ["🕌 Namaz vakitleri ve ezan", "📖 Kur'an, meal ve 15 hafız", "🤲 Dualar, zikirmatik, Esmâü'l-Hüsnâ", "💌 Cuma ve kandil kartları"] },
+    en: { tag: "A verse chosen for you every day, prayer times and athan, ad-free Quran reading. No subscription.",
+      play: "Get it on Google Play", ios: "Download on the App Store", soon: "The iPhone version is coming soon to the App Store.",
+      f: ["🕌 Prayer times and athan", "📖 Quran with translation and 15 reciters", "🤲 Duas, dhikr counter, 99 Names", "💌 Friday and Eid greeting cards"] },
+    de: { tag: "Jeden Tag ein Vers für dich, Gebetszeiten und Adhan, Koran ohne Werbung. Kein Abo.",
+      play: "Bei Google Play laden", ios: "Im App Store laden", soon: "Die iPhone-Version kommt bald in den App Store.",
+      f: ["🕌 Gebetszeiten und Adhan", "📖 Koran mit Übersetzung und 15 Rezitatoren", "🤲 Bittgebete, Dhikr-Zähler, 99 Namen", "💌 Grußkarten für Freitag und Eid"] },
+    fr: { tag: "Un verset choisi pour vous chaque jour, heures de prière et adhan, Coran sans publicité. Sans abonnement.",
+      play: "Disponible sur Google Play", ios: "Télécharger dans l'App Store", soon: "La version iPhone arrive bientôt sur l'App Store.",
+      f: ["🕌 Heures de prière et adhan", "📖 Coran avec traduction et 15 récitateurs", "🤲 Invocations, compteur de dhikr, 99 noms", "💌 Cartes du vendredi et de l'Aïd"] },
+    nl: { tag: "Elke dag een vers voor jou, gebedstijden en adhan, Koran zonder reclame. Geen abonnement.",
+      play: "Download via Google Play", ios: "Download in de App Store", soon: "De iPhone-versie komt binnenkort in de App Store.",
+      f: ["🕌 Gebedstijden en adhan", "📖 Koran met vertaling en 15 reciteerders", "🤲 Smeekbeden, dhikr-teller, 99 namen", "💌 Wenskaarten voor vrijdag en Eid"] },
+    ar: { tag: "آية مختارة لك كل يوم، مواقيت الصلاة والأذان، وقراءة القرآن بلا إعلانات. بلا اشتراك.",
+      play: "حمّله من Google Play", ios: "حمّله من App Store", soon: "نسخة iPhone قريبًا على App Store.",
+      f: ["🕌 مواقيت الصلاة والأذان", "📖 القرآن الكريم مع 15 قارئًا", "🤲 الأدعية والمسبحة والأسماء الحسنى", "💌 بطاقات الجمعة والعيد"] },
+    id: { tag: "Satu ayat pilihan untukmu setiap hari, jadwal sholat dan azan, baca Al-Qur'an tanpa iklan. Tanpa langganan.",
+      play: "Unduh di Google Play", ios: "Unduh di App Store", soon: "Versi iPhone segera hadir di App Store.",
+      f: ["🕌 Jadwal sholat dan azan", "📖 Al-Qur'an, terjemahan, dan 15 qari", "🤲 Doa, penghitung zikir, Asmaul Husna", "💌 Kartu ucapan Jumat dan hari raya"] }
+  };
+  var lang = ((navigator.language || 'en').slice(0, 2)).toLowerCase();
+  var t = T[lang] || T.en;
+  document.documentElement.lang = T[lang] ? lang : 'en';
+  if (lang === 'ar') document.getElementById('app').setAttribute('dir', 'rtl');
+  document.getElementById('tag').textContent = t.tag;
+  document.getElementById('play').textContent = t.play;
+  document.getElementById('ios').textContent = t.ios;
+  var ul = document.getElementById('features');
+  t.f.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; ul.appendChild(li); });
+  if (!IOS_LIVE) {
+    // App Store sayfası henüz açık değil: iPhone düğmesi yerine "çok yakında" notu
+    document.getElementById('ios').hidden = true;
+    var soon = document.getElementById('soon');
+    soon.textContent = t.soon;
+    soon.hidden = !isIOS;
+  }
+</script>
+</body>
+</html>
